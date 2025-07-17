@@ -6,6 +6,7 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import model.Match;
+import service.MatchScoreCalculationService;
 import service.MatchService;
 import util.JSPHelper;
 
@@ -15,6 +16,7 @@ import java.util.UUID;
 @WebServlet("/match-score")
 public class MatchScoreServlet extends HttpServlet {
     private final MatchService service = MatchService.getInstance();
+    private final MatchScoreCalculationService calculationService = MatchScoreCalculationService.getInstance();
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -45,20 +47,19 @@ public class MatchScoreServlet extends HttpServlet {
         }
         UUID uuid = UUID.fromString(uuidParam);
         Match match = service.getMatch(uuid);
+
         if (match == null) {
             resp.sendError(HttpServletResponse.SC_NOT_FOUND);
             return;
        }
-//        Score score = match.getScore();
-//        if ("player1".equals(pointWinner)){
-//            score.pointTOPlayer();
-//        }else if("player2".equals(pointWinner)){
-//            score.pointToPlayer2();
-//        }
-//        if(score.isFinished()){
-//            service.removeMatch(uuid);
-//        }
+        if ("player1".equals(pointWinner)){
+            calculationService.pointTOPlayer(uuid);
+        }else if("player2".equals(pointWinner)){
+            calculationService.pointToPlayer2(uuid);
+        }
+        if(match.getScore().isMatchOver()){
+            service.removeMatch(uuid);
+        }
             resp.sendRedirect(req.getContextPath() + "/match-score?uuid=" + req.getParameter("uuid"));
     }
-
 }
