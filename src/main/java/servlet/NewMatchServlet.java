@@ -35,6 +35,7 @@ public class NewMatchServlet extends HttpServlet {
 
         Players player1 = playerRepository.findOrCreate(nameFirstPlayer);//test
         Players player2 = playerRepository.findOrCreate(nameSecondPlayer);//test
+
         UUID matchId = service.createMatch(player1, player2);
         resp.sendRedirect(req.getContextPath() + "/match-score?uuid=" + matchId);
     }
