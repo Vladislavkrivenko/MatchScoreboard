@@ -1,7 +1,7 @@
 package dao;
 
 import lombok.Getter;
-import model.Players;
+import model.Player;
 
 import java.util.Collection;
 import java.util.HashMap;
@@ -11,17 +11,17 @@ public class PlayerRepository {
 
     @Getter
     private static final PlayerRepository instance = new PlayerRepository();
-    private final Map<String, Players> players = new HashMap<>();
+    private final Map<String, Player> players = new HashMap<>();
     private static int idCounter = 1;
 
     private PlayerRepository() {
     }
 
-    public Players findOrCreate(String name) {
-        return players.computeIfAbsent(name, n -> new Players(idCounter++, n));
-    }
+//   // public Player findOrCreate(String name) {
+//        return players.computeIfAbsent(name, n -> new Player(idCounter++, n));
+//    }
 
-    public Collection<Players> findAll() {
+    public Collection<Player> findAll() {
         return players.values();
     }
 }

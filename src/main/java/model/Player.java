@@ -6,12 +6,14 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.List;
+
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
 @Entity
-public class Players {
+public class Player {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
@@ -19,4 +21,9 @@ public class Players {
     @Column(unique = true, nullable = false)
     private String name;
 
+    @OneToMany(mappedBy = "firstPlayer")
+    private List<Matches> matchesFirstPlayer;
+
+    @OneToMany(mappedBy = "secondPlayer")
+    private List<Matches> matchesSecondPlayer;
 }

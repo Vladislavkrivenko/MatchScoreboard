@@ -13,8 +13,8 @@ import java.util.UUID;
 @Builder
 public class Match {
     private UUID uuid;
-    private Players player1;
-    private Players player2;
+    private Player player1;
+    private Player player2;
     private Score score;
 
 }

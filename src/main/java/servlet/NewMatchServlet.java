@@ -6,13 +6,13 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import model.Players;
+import lombok.extern.slf4j.Slf4j;
 import service.MatchService;
 import util.JSPHelper;
 
 import java.io.IOException;
-import java.util.UUID;
 
+@Slf4j
 @WebServlet("/new-match")
 public class NewMatchServlet extends HttpServlet {
     private final MatchService service = MatchService.getInstance();
@@ -20,6 +20,7 @@ public class NewMatchServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        log.info("GET request to /new-match");
         req.getRequestDispatcher(JSPHelper.getPath("match")).forward(req, resp);
     }
 
@@ -28,15 +29,18 @@ public class NewMatchServlet extends HttpServlet {
         String nameFirstPlayer = req.getParameter("nameFirstPlayer");
         String nameSecondPlayer = req.getParameter("nameSecondPlayer");
 
+        log.info("POST request to /new-match with players: {} and '{}", nameFirstPlayer, nameSecondPlayer);
         if (nameFirstPlayer == null || nameSecondPlayer == null || nameFirstPlayer.equals(nameSecondPlayer)) {
+            log.warn("Invalid player names provided: '{}' and '{}'", nameFirstPlayer, nameSecondPlayer);
             resp.sendError(HttpServletResponse.SC_BAD_REQUEST);
             return;
         }
 
-        Players player1 = playerRepository.findOrCreate(nameFirstPlayer);//test
-        Players player2 = playerRepository.findOrCreate(nameSecondPlayer);//test
+//        Player player1 = playerRepository.findOrCreate(nameFirstPlayer);//test
+//        Player player2 = playerRepository.findOrCreate(nameSecondPlayer);//test
 
-        UUID matchId = service.createMatch(player1, player2);
-        resp.sendRedirect(req.getContextPath() + "/match-score?uuid=" + matchId);
+//        UUID matchId = service.createMatch(player1, player2);
+//        log.info("Created new match with id: {}", matchId);
+//        resp.sendRedirect(req.getContextPath() + "/match-score?uuid=" + matchId);
     }
 }
