@@ -1,32 +1,36 @@
 package util;
 
+import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
+import model.Matches;
 import model.Player;
-import org.hibernate.Session;
 import org.hibernate.SessionFactory;
-import org.hibernate.Transaction;
+
 import org.hibernate.cfg.Configuration;
+
 @Slf4j
 public class HibernateUtil {
-//   private static final Logger logger = LoggerFactory.getLogger(HibernateUtil.class);
-
-    public static void main(String[] args) {
-        Configuration configuration = new Configuration();
-        configuration.configure();
-        Player player = Player.builder()
-                .name("Vova")
-                .build();
-        log.info("User {}", player);
-        try (SessionFactory sessionFactory = configuration.buildSessionFactory();
-             Session session = sessionFactory.openSession()) {
-            Transaction transaction = session.beginTransaction();
-            session.saveOrUpdate(player);
-
-log.trace("Players is created {}",transaction );
-            session.getTransaction().commit();
-
-        }
-
+    private HibernateUtil() {
     }
 
+    @Getter
+    private static final SessionFactory sessionFactory = buildSessionFactory();
+
+    private static SessionFactory buildSessionFactory() {
+        try {
+            Configuration configuration = new Configuration();
+            configuration.configure("hibernate.cfg.xml");
+            configuration.addAnnotatedClass(Player.class);
+            configuration.addAnnotatedClass(Matches.class);
+
+            return configuration.buildSessionFactory();
+        } catch (Throwable ex) {
+            log.warn("SessionFactory build failed", ex);
+            throw new ExceptionInInitializerError(ex);
+        }
+    }
+
+    public static void shutdown() {
+        getSessionFactory().close();
+    }
 }

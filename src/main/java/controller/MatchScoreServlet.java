@@ -1,4 +1,4 @@
-package servlet;
+package controller;
 
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
@@ -7,6 +7,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.extern.slf4j.Slf4j;
 import model.Match;
+import service.FinishedMatchesPersistenceService;
 import service.MatchScoreCalculationService;
 import service.MatchService;
 import util.JSPHelper;
@@ -19,6 +20,7 @@ import java.util.UUID;
 public class MatchScoreServlet extends HttpServlet {
     private final MatchService service = MatchService.getInstance();
     private final MatchScoreCalculationService calculationService = MatchScoreCalculationService.getInstance();
+    private final FinishedMatchesPersistenceService persistenceService = FinishedMatchesPersistenceService.getInstance();
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -91,6 +93,7 @@ public class MatchScoreServlet extends HttpServlet {
 
         if (match.getScore().isMatchOver()) {
             log.info("Match with UUID {} is over. Removing from active matches", uuid);
+            persistenceService.saveFinishedMatches(match);
             service.removeMatch(uuid);
         }
         resp.sendRedirect(req.getContextPath() + "/match-score?uuid=" + req.getParameter("uuid"));

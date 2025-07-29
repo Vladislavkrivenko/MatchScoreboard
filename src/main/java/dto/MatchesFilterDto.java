@@ -1,4 +1,7 @@
 package dto;
 
-public record MatchesFilterDto(Integer page, String name) {
+import lombok.Builder;
+
+@Builder
+public record MatchesFilterDto(String playerName, int page) {
 }

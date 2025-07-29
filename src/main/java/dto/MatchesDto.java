@@ -1,4 +1,9 @@
 package dto;
 
-public record MatchesDto(String firstPlayer, String secondPlayer, String winner) {
+import lombok.Builder;
+
+import java.util.List;
+
+@Builder
+public record MatchesDto(List<MatchDto> matches, int totalPages, int currentPage) {
 }

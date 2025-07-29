@@ -1,4 +1,4 @@
-package servlet;
+package controller;
 
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
@@ -11,13 +11,11 @@ import util.JSPHelper;
 import java.io.IOException;
 
 @Slf4j
-@WebServlet("/matches")
-public class MatchesServlet extends HttpServlet {
-
+@WebServlet("/")
+public class HomeServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        log.info("GET /matches - Matches page requested");
-        req.setAttribute("matches", null);
-        req.getRequestDispatcher(JSPHelper.getPath("matches")).forward(req, resp);
+        log.info("GET / - Home page requested");
+        req.getRequestDispatcher(JSPHelper.getPath("home")).forward(req, resp);
     }
 }
