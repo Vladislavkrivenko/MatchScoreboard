@@ -12,31 +12,33 @@
     <button type="submit">Искать</button>
 </form>
 
-<table border="1" cell padding="5" cells pacing="0">
+<table border="1" cellpadding="5" cellspacing="0">
     <thead>
-        <tr>
-            <th>Матч ID</th>
-            <th>Игрок 1</th>
-            <th>Игрок 2</th>
-            <th>Счёт</th>
-        </tr>
+    <tr>
+        <th>Матч ID</th>
+        <th>Игрок 1</th>
+        <th>Игрок 2</th>
+        <th>Победитель</th>
+    </tr>
     </thead>
     <tbody>
-        <c:choose>
-            <c:when test="${empty matches}">
-                <tr><td cols pan="4">Матчи не найдены</td></tr>
-            </c:when>
-            <c:otherwise>
-                <c:forEach var="match" items="${matches}">
-                    <tr>
-                        <td>${match.id}</td>
-                        <td>${match.player1}</td>
-                        <td>${match.player2}</td>
-                        <td>${match.score}</td>
-                    </tr>
-                </c:forEach>
-            </c:otherwise>
-        </c:choose>
+    <c:choose>
+        <c:when test="${empty matchesDto.matches}">
+            <tr>
+                <td colspan="4">Матчи не найдены</td>
+            </tr>
+        </c:when>
+        <c:otherwise>
+            <c:forEach var="match" items="${matchesDto.matches}">
+                <tr>
+                    <td>${match.matchId}</td>
+                    <td>${match.player1Name}</td>
+                    <td>${match.player2Name}</td>
+                    <td>${match.winnerName}</td>
+                </tr>
+            </c:forEach>
+        </c:otherwise>
+    </c:choose>
     </tbody>
 </table>
 

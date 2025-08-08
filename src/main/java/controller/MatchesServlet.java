@@ -36,7 +36,8 @@ public class MatchesServlet extends HttpServlet {
         MatchesDto matchesDto = matchService.findMatches(filterDto);
 
 
-        req.setAttribute("matchesDto", filterDto);
+//        req.setAttribute("matchesDto", matchesDto);
+        req.setAttribute("matchesDto", filterDto);//test
         req.getRequestDispatcher(JSPHelper.getPath("matches")).forward(req, resp);
     }
 }

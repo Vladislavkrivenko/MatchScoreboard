@@ -9,7 +9,7 @@ public class ValidationUtil {
         name = name.trim();
         return name.length() >= 2 &&
                 name.length() <= 20 &&
-                name.matches("A-Za-zА-Яа-яЁёЇїІіЄєҐґ\\\\s]+");
+                name.matches("^[A-Za-z\\p{IsCyrillic}\\s]+$");
     }
 
 }

@@ -26,6 +26,6 @@ public class Matches {
     private Player secondPlayer;
 
     @ManyToOne
-    @JoinColumn(name = "winner", referencedColumnName = "id")
+    @JoinColumn(name = "winner_id", referencedColumnName = "id")
     private Player winner;
 }

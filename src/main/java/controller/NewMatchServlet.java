@@ -33,7 +33,7 @@ public class NewMatchServlet extends HttpServlet {
         String player1Name = req.getParameter("player1");
         String player2Name = req.getParameter("player2");
 
-        log.info("POST request to /new-match with players: {} and '{}", player1Name, player2Name);
+        log.info("POST request to /new-match with players: '{}' and '{}'", player1Name, player2Name);
 
         if (!isValidPlayerName(player1Name) || !isValidPlayerName(player2Name)) {
             log.warn("Invalid player names provided: '{}' and '{}'", player1Name, player2Name);
