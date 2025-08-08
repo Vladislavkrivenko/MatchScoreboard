@@ -6,6 +6,7 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.Collection;
 import java.util.List;
 
 @Data
@@ -26,4 +27,8 @@ public class Player {
 
     @OneToMany(mappedBy = "secondPlayer")
     private List<Matches> matchesSecondPlayer;
+
+    @OneToMany(mappedBy = "winner")
+    private Collection<Matches> matches;
+
 }

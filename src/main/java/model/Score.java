@@ -122,7 +122,7 @@ public class Score {
         }
     }
 
-    private void winGame(int player) {
+    public void winGame(int player) {
 
         if (isTiebreak) {
             return;

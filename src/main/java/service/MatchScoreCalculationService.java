@@ -13,7 +13,7 @@ public class MatchScoreCalculationService {
     private final MatchService matchService = MatchService.getInstance();
     private final FinishedMatchesPersistenceService service = FinishedMatchesPersistenceService.getInstance();
 
-    private MatchScoreCalculationService() {
+    public MatchScoreCalculationService() {
     }
 
     public void pointToPlayer(UUID matchId) {

@@ -46,6 +46,7 @@ public class MatchScoreServlet extends HttpServlet {
             resp.sendError(HttpServletResponse.SC_NOT_FOUND);
             return;
         }
+
         log.info("Displaying score for match UUID: {}", uuidParam);
         req.setAttribute("player1", match.getPlayer1());
         req.setAttribute("player2", match.getPlayer2());
